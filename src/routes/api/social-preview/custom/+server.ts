@@ -5,6 +5,9 @@ import {API_API_KEY} from '$env/static/private'
 
 import type {RequestHandler} from './$types'
 
+const ONE_MINUTE_IN_SECONDS = 60
+const ONE_HOUR_IN_SECONDS = 60 * ONE_MINUTE_IN_SECONDS
+
 export const GET: RequestHandler = async ({fetch, url}) => {
 	const urlToHit = url.searchParams.get('url')
 	if (!urlToHit || !urlToHit.startsWith('http')) {
@@ -24,6 +27,7 @@ export const GET: RequestHandler = async ({fetch, url}) => {
 	return new Response(response.body, {
 		headers: new Headers({
 			'Content-Type': 'image/png',
+			'Cache-Control': `public, max-age=${ONE_HOUR_IN_SECONDS}, stale-while-revalidate=${ONE_MINUTE_IN_SECONDS}`,
 		}),
 	})
 }
