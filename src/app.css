@@ -6,4 +6,8 @@
 	strong {
 		@apply font-semibold;
 	}
+
+	a {
+		@apply underline decoration-primary-400 decoration-2 transition-colors;
+	}
 }
